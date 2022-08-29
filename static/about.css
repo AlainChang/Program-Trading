@@ -1,0 +1,94 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.canva{
+    background-color: black;
+    background-size: cover;
+    height: 80px;
+    width: 100%;
+}
+.offcanvas{
+    background: rgb(86, 80, 80);
+}
+.navbar-toggler-icon{
+    font-size: 32px;
+    color: white;
+}
+.navbar-toggler:focus{
+    outline: none;
+    box-shadow:none;
+}
+.navbar-brand{
+    color: white;
+    font-weight: bold;
+    font-size:26px;
+}
+.navbar-brand:hover{
+    color: white;
+}
+.navbar-nav a{
+    text-decoration: none;
+    color: white;
+    font-size: 26px;
+    text-decoration: uppercase;
+    transition: all 0.5s;
+}
+.navbar-nav a:hover{
+    color:yellow;
+}
+.content{
+    font-size: 26px;
+    color: black;
+    text-align: left;
+}
+.content input{
+    height: 65px;
+    width: 70%;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+.user{
+    color: white;
+    font-weight: bold;
+    font-size:32px;
+    padding: 20px;
+    text-decoration: none;
+}
+.btn{
+    height: 45px;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: orange;
+    font-weight: 500;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    font-size: 28px;
+}
+.btn::before,
+.btn::after{
+    position: absolute;
+    content: "";
+    z-index: -1;
+}
+.btn::after{
+    height: 0;
+    top: 0;
+    left: 0;
+    transition-duration: 0.5s;
+    width: 100%;
+}
+.btn:hover::after{
+    height: 100%;
+    background: lightgreen;
+}
+.btnicon{
+    font-size: 28px;
+    color: black
+}

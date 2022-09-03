@@ -1,4 +1,3 @@
-import email
 from flask import Flask, redirect, render_template, request, session
 from bson.objectid import ObjectId
 import matplotlib.pyplot as plt
@@ -10,7 +9,6 @@ import plotly.graph_objs as go
 import yfinance as yf
 import twstock as t
 import pandas as p
-import talib
 import pymongo
 import certifi
 from datetime import timedelta

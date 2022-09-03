@@ -248,9 +248,19 @@ def order():
     print(record)
     print(buy_day, buyorsell, stock_id, stockname, buy_price, volume)
     cursor = collection.find_one({
-        "email": email
+        "email": email,
+        "record": [{
+            'buy_day': buy_day,
+            'buyorsell': buyorsell,
+            'stock_id': stock_id,
+            'stockname': stockname,
+            'buy_price': buy_price,
+            'volume': volume
+        }]
     })
-    return render_template('order.html')
+    for doc in cursor:
+        print(doc)
+    return render_template('order.html', doc=doc)
 
 
 # @app.route('/member/ordersearch', methods=['POST'])

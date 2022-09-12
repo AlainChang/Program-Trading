@@ -1,3 +1,4 @@
+from multiprocessing.dummy import Array
 from flask import Flask, redirect, render_template, request, session
 from bson.objectid import ObjectId
 import matplotlib.pyplot as plt
@@ -12,6 +13,8 @@ import pandas as p
 import pymongo
 import certifi
 from datetime import timedelta
+import requests
+import talib
 
 client = pymongo.MongoClient(
     "mongodb+srv://root:databasepassword@cluster0.yqjcy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", tlsCAFile=certifi.where())
@@ -231,6 +234,7 @@ def order():
     stockname = request.form['stockname']
     buy_price = request.form['buy_price']
     volume = request.form['volume']
+
     collection = db.user
     record = collection.insert_one({
         "email": email,
@@ -245,35 +249,12 @@ def order():
     })
     print(record)
     print(buy_day, buyorsell, stock_id, stockname, buy_price, volume)
-    cursor = collection.find_one({
+
+    cursor = collection.find({
         "email": email,
-        "record": [{
-            'buy_day': buy_day,
-            'buyorsell': buyorsell,
-            'stock_id': stock_id,
-            'stockname': stockname,
-            'buy_price': buy_price,
-            'volume': volume
-        }]
     })
-    for doc in cursor:
-        print(doc)
-    return render_template('order.html', doc=doc)
 
-
-# @app.route('/member/ordersearch', methods=['POST'])
-# def ordersearch():
-#     collection = db.user
-
-#     list = collection.find_one({
-#         "email": email
-#     })
-#     print(list['record'])
-#     record = list['record']
-#     for search in record:
-#         print(search)
-
-#     return redirect('order.html', search=search)
+    return render_template('order.html', list=cursor)
 
 # 路由:about_page
 
@@ -283,20 +264,20 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/member/bbandspage')
+def bbandspage():
+    return render_template('bbands.html')
+
+
 @app.route('/member/bbands')
 def bbands():
-    # stock_id = request.args.get('bbands')
-    # df = yf.download(stock_id, period='max', interval='1d')
-    # df['SMA'] = df.close.rolling(windows=20).mean()
-    # df['stddev'] = df.close.rolling(windows=20).std()
-    # df['Upper'] = df.SMA + 2*df.stddev
-    # df['Lower'] = df.SMA - 2*df.stddev
-    # df['Buy_Signal'] = np.where(df.Lower > df.close, True, False)
-    # df['Sell_Signal'] = np.where(df.Upper < df.close, True, False)
-    # df = df.dropna()
-    # plt.plot(df[['Close', 'SMA', 'Upper', 'lower']])
-    # plt.show()
-    return render_template('bbands.html')
+
+    stockid = request.args.get('stockid')
+    id = yf.Ticker(stockid)
+    value = id.history(period="max")
+    print(value)
+
+    return render_template('bbands.html', value=value)
 
 
 @app.route('/member/rsi')
@@ -307,6 +288,16 @@ def rsi():
 @app.route('/member/macd')
 def macd():
     return render_template('macd.html')
+
+
+@app.route('/member/news')
+def news():
+    url = "https://newsapi.org/v2/top-headlines?country=tw&category=business&apiKey=1532527f0e4745ebaabb4627fea2c7c7"
+    r = requests.get(url).json()
+    case = {
+        'articles': r['articles']
+    }
+    return render_template('news.html', cases=case)
 
 
 if __name__ == '__main__':

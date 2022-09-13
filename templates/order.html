@@ -108,19 +108,15 @@
         <button class="btn1">查詢</button>
       </form>
     
-      <div class="container">
-        <table class="table">
-          <tbody>
+      <div class="container" border>
             {%for i in list%}
-            <tr>
-              <td>
-                {{i}}
-              </td>
+            <ul>
+              <li>{{i}}</li>
+              <hr/>
+            </ul>
 
-            </tr>
             {%endfor%}
-          </tbody>
-        </table>
+
       </div>
 
       </div>

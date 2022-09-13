@@ -235,7 +235,7 @@ def order():
     buy_price = request.form['buy_price']
     volume = request.form['volume']
 
-    collection = db.user
+    collection = db.record
     record = collection.insert_one({
         "email": email,
         "record": [{
@@ -251,10 +251,11 @@ def order():
     print(buy_day, buyorsell, stock_id, stockname, buy_price, volume)
 
     cursor = collection.find({
-        "email": email,
+        "email": email
     })
 
     return render_template('order.html', list=cursor)
+
 
 # 路由:about_page
 
@@ -276,6 +277,16 @@ def bbands():
     id = yf.Ticker(stockid)
     value = id.history(period="max")
     print(value)
+
+    value['SMA'] = value.Close.rolling(window=20).mean()
+    value['stddev'] = value.Close.rolling(window=20).std()
+    value['Upper'] = value.SMA + 2 * value.stddev
+    value['Lower'] = value.SMA - 2 * value.stddev
+    value['Buy_Signal'] = np.where(value.Lower > value.Clsoe, True, False)
+    value['Sell_Signal'] = np.where(value.Upper < value.Clsoe, True, False)
+    value = value.dropna()
+    plt.plot(value[['Close', 'SMA', 'Upper', 'Lower']])
+    plt.show()
 
     return render_template('bbands.html', value=value)
 

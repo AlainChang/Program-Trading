@@ -30,9 +30,7 @@
                 <li class="nav-item">
                   <a class="nav-link px-3" href="/member">首頁</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link px-3" href="/member/stockinfopage">公司資訊</a>
-                </li>
+                
                 <li class="nav-item">
                   <a class="nav-link px-3" href="/member/news">商業新聞</a>
                 </li>
@@ -46,9 +44,8 @@
                         交易策略
                       </a>
                       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="/member/bbandspage">布林通道</a></li>
-                        <li><a class="dropdown-item" href="/member/rsi">RSI</a></li>
-                        <li><a class="dropdown-item" href="/member/macd">MACD</a></li>
+                        <li><a class="dropdown-item" href="/member/tcone">技術指標-1</a></li>
+
                       </ul>
                     </li>
                   </ul>
@@ -81,7 +78,7 @@
             <h1 class="">查詢上市、櫃公司資訊</h1>
              <p>上市(代號.tw)上櫃(代號.two)</p>
              <form action="/member/stockinfo">
-               <input type="text" name="stockid" placeholder="輸入股票代號">
+               <input type="text" name="stockid" placeholder="輸入股票代號" required>
                <button class="btn1">查詢</button>
             </form>
           </div>

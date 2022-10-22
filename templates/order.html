@@ -37,9 +37,7 @@
                         <li class="nav-item">
                           <a class="nav-link px-3" href="/member">首頁</a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link px-3" href="/member/stockinfopage">公司資訊</a>
-                        </li>
+                        
                         <li class="nav-item">
                           <a class="nav-link px-3" href="/member/news">商業新聞</a>
                         </li>
@@ -53,9 +51,7 @@
                                 交易策略
                               </a>
                               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="/member/bbandspage">布林通道</a></li>
-                                <li><a class="dropdown-item" href="/member/rsi">RSI</a></li>
-                                <li><a class="dropdown-item" href="/member/macd">MACD</a></li>
+                                <li><a class="dropdown-item" href="/member/tcone">技術指標-1</a></li>
                               </ul>
                             </li>
                           </ul>
@@ -88,13 +84,13 @@
         <option>賣出</option>
       </select>
       <span>股票代號</span>
-      <input type="text" name="stock_id" placeholder="股票代號">
+      <input type="text" name="stock_id" placeholder="股票代號" required>
       <span>公司名稱</span>
-      <input type="text" name="stockname" placeholder="公司名稱">
+      <input type="text" name="stockname" placeholder="公司名稱" required>
       <span>價格</span>
-      <input type="text" name="buy_price" placeholder="價格">
+      <input type="text" name="buy_price" placeholder="價格" required>
       <span>數量(張)</span>
-      <input type="text" name="volume" placeholder="張數">
+      <input type="text" name="volume" placeholder="張數" required>
       <p></p>
       <div class="container text-center">
         <button class="btn" >加入</button>

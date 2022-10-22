@@ -1,20 +1,21 @@
-from multiprocessing.dummy import Array
+import ta
+import requests
+from datetime import timedelta
+import certifi
+import pymongo
+import twstock as t
+import yfinance as yf
+from plotly.subplots import make_subplots
+import plotly.graph_objs as go
+import plotly
+import json
+import numpy as np
+import pandas as pd
 from flask import Flask, redirect, render_template, request, session
 from bson.objectid import ObjectId
 import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import json
-import plotly
-import plotly.graph_objs as go
-import yfinance as yf
-import twstock as t
-import pandas as p
-import pymongo
-import certifi
-from datetime import timedelta
-import requests
-import talib
+import mplfinance as mpf
+
 
 client = pymongo.MongoClient(
     "mongodb+srv://root:databasepassword@cluster0.yqjcy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", tlsCAFile=certifi.where())
@@ -265,40 +266,84 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/member/bbandspage')
+@app.route('/member/tcone')
 def bbandspage():
-    return render_template('bbands.html')
+    return render_template('tcone.html')
 
 
-@app.route('/member/bbands')
-def bbands():
+@app.route('/member/tconeplt')
+def tcone():
 
     stockid = request.args.get('stockid')
     id = yf.Ticker(stockid)
-    value = id.history(period="max")
-    print(value)
+    df = id.history(period="max", start="2020-01-01")
+    print(df)
 
-    value['SMA'] = value.Close.rolling(window=20).mean()
-    value['stddev'] = value.Close.rolling(window=20).std()
-    value['Upper'] = value.SMA + 2 * value.stddev
-    value['Lower'] = value.SMA - 2 * value.stddev
-    value['Buy_Signal'] = np.where(value.Lower > value.Clsoe, True, False)
-    value['Sell_Signal'] = np.where(value.Upper < value.Clsoe, True, False)
-    value = value.dropna()
-    plt.plot(value[['Close', 'SMA', 'Upper', 'Lower']])
+    # mpf.plot(df)
+    # fig = go.Figure(data=[go.Candlestick(
+    #     open=df['Open'],
+    #     high=df['High'],
+    #     low=df['Low'],
+    #     close=df['Close'],
+    #     increasing_line_color='red',
+    #     decreasing_line_color='green'
+    # )])
+
+    # fig.show()
+
+    plt.subplot(3, 1, 1)
+    period = 20
+    df['SMA'] = df['Close'].rolling(window=period).mean()
+    df['STD'] = df['Close'].rolling(window=period).std()
+    df['Upper'] = df['SMA'] + (df['STD']*2)
+    df['Lower'] = df['SMA'] - (df['STD']*2)
+    # df['Buy_Signal'] = np.where(df.Lower > df.Close, True, False)
+    # df['Sell_Signal'] = np.where(df.Upper < df.Close, True, False)
+
+    # buys = []
+    # sells = []
+    # open_pos = False
+
+    # for i in range(len(value)):
+    #     if value.Lower[i] > value.Close[i]:
+    #         if open_pos == False:
+    #             buys.append(i)
+    #             open_pos = True
+    #     elif value.Upper[i] < value.Close[i]:
+    #         if open_pos:
+    #             sells.append(i)
+    #             open_pos = False
+
+    plt.plot(df.Upper, label='Upper', color='green')
+    plt.plot(df.Lower, label='Lower', color='green')
+    plt.plot(df.SMA, label='SMA', color='yellow')
+    plt.plot(df.Close, label='Close', color='blue')
+    plt.legend()
+    plt.fill_between(df.index, df.Upper,
+                     df.Lower, color='grey', alpha=0.2)
+
+    # plt.scatter(value.iloc[buys].index,
+    #             value.iloc[buys].Close, marker='^', color='red')
+    # plt.scatter(value.iloc[sells].index,
+    #             value.iloc[sells].Close, marker='v', color='green')
+
+    plt.subplot(3, 1, 2)
+    df['rsi'] = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
+    plt.plot(df['rsi'])
+
+    plt.subplot(3, 1, 3)
+    df['EMA12'] = df.Close.ewm(span=12).mean()
+    df['EMA26'] = df.Close.ewm(span=26).mean()
+    df['MACD'] = df.EMA12 - df.EMA26
+    df['signal'] = df.MACD.ewm(span=9).mean()
+
+    plt.plot(df.signal, label='signal', color='red')
+    plt.plot(df.MACD, label='MACD', color='green')
+    plt.legend()
+
     plt.show()
-
-    return render_template('bbands.html', value=value)
-
-
-@app.route('/member/rsi')
-def rsi():
-    return render_template('rsi.html')
-
-
-@app.route('/member/macd')
-def macd():
-    return render_template('macd.html')
+    plt.close()
+    return render_template('tcone.html')
 
 
 @app.route('/member/news')

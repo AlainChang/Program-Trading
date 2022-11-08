@@ -51,7 +51,8 @@
                                 交易策略
                               </a>
                               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="/member/tcone">技術指標-1</a></li>
+                                <li><a class="dropdown-item" href="/member/tcone">技術指標一</a></li>
+                                <li><a class="dropdown-item" href="/member/bt">回測指標</a></li>
                               </ul>
                             </li>
                           </ul>
@@ -75,7 +76,7 @@
              
     </section>
     <p></p>
-    <form action="/member/order" method="POST" >
+    <form action="/member/order" method="post">
       <span>日期</span>
       <input type="date" name="buy_day">
       <select name="buyorsell">
@@ -101,12 +102,11 @@
     </form>
     
       <div class="container" border>
+
             {%for i in list%}
             <ul>
-              <li>{{i}}</li>
-              <hr/>
+              <li>{{i.email}}{{i.record}}</li>
             </ul>
-
             {%endfor%}
 
       </div>

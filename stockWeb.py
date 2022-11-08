@@ -15,6 +15,10 @@ from flask import Flask, redirect, render_template, request, session
 from bson.objectid import ObjectId
 import matplotlib.pyplot as plt
 import mplfinance as mpf
+import talib
+from backtesting import Backtest, Strategy
+from backtesting.lib import crossover
+from backtesting.test import SMA
 
 
 client = pymongo.MongoClient(
@@ -46,7 +50,7 @@ def index():
 @app.route('/member')
 def member():
     if 'email' in session:
-        return render_template('member.html')
+        return render_template('member.html', nickname=nickname)
     else:
         return redirect("/")
 
@@ -117,7 +121,7 @@ def signin():
     print(memberdata['nickname'])
     nickname = memberdata['nickname']
     session['email'] = result['email']
-    return render_template('/member.html', nickname=nickname)
+    return render_template('member.html', nickname=nickname)
     # 登入成功導向會員頁面
 
 # 路由:signout_page
@@ -227,7 +231,7 @@ def orderpage():
     return render_template('order.html')
 
 
-@app.route('/member/order', methods=["POST"])
+@app.route('/member/order', methods=['POST'])
 def order():
     buy_day = request.form['buy_day']
     buyorsell = request.form['buyorsell']
@@ -291,7 +295,7 @@ def tcone():
 
     # fig.show()
 
-    plt.subplot(3, 1, 1)
+    plt.subplot(4, 1, 1)
     period = 20
     df['SMA'] = df['Close'].rolling(window=period).mean()
     df['STD'] = df['Close'].rolling(window=period).std()
@@ -327,11 +331,11 @@ def tcone():
     # plt.scatter(value.iloc[sells].index,
     #             value.iloc[sells].Close, marker='v', color='green')
 
-    plt.subplot(3, 1, 2)
+    plt.subplot(4, 1, 3)
     df['rsi'] = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
     plt.plot(df['rsi'])
 
-    plt.subplot(3, 1, 3)
+    plt.subplot(4, 1, 4)
     df['EMA12'] = df.Close.ewm(span=12).mean()
     df['EMA26'] = df.Close.ewm(span=26).mean()
     df['MACD'] = df.EMA12 - df.EMA26
@@ -344,6 +348,54 @@ def tcone():
     plt.show()
     plt.close()
     return render_template('tcone.html')
+
+
+@app.route('/member/bt')
+def bt():
+    return render_template('bt.html')
+
+
+@app.route('/member/btpage')
+def btpage():
+    class SmaCrossCons(Strategy):
+        fast_days = 5
+        slow_days = 15
+
+        def init(self):
+            super().init()
+            self.fast_line = self.I(SMA, self.data.Close, self.fast_days)
+            self.slow_line = self.I(SMA, self.data.Close, self.slow_days)
+            self.conservative = True
+
+        def next(self):
+            if crossover(self.fast_line, self.slow_line):
+                print(
+                    f"{self.data.index[-1]} Buy: Price: {self.data.Close[-1]}, Slow: {self.slow_line[-5:]}, Fast: {self.fast_line[-5:]}"
+                )
+                self.buy()
+            elif crossover(self.slow_line, self.fast_line):
+                print(
+                    f"{self.data.index[-1]} Sell: Price: {self.data.Close[-1]}, Slow: {self.slow_line[-5:]}, Fast: {self.fast_line[-5:]}"
+                )
+                self.sell()
+
+        @property
+        def params(self):
+            return self._params
+
+    stockid = request.args.get('stockid')
+    id = yf.Ticker(stockid)
+    df = id.history(period="max", start="2020-01-01")
+    print(df)
+
+    test = Backtest(df, SmaCrossCons, cash=10000000,
+                    commission=0.004, exclusive_orders=True)
+
+    result = test.optimize(fast_days=[5, 10, 15], slow_days=[10, 15, 20],
+                           constraint=lambda p: p.fast_days < p.slow_days)
+    test.plot()
+
+    return render_template('bt.html')
 
 
 @app.route('/member/news')

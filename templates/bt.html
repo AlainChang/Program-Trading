@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='macd.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    
     <title>股市觀測站</title>
 </head>
 <style>
@@ -35,7 +36,7 @@
                         <li class="nav-item">
                           <a class="nav-link px-3" href="/member">首頁</a>
                         </li>
-                       
+                      
                         <li class="nav-item">
                           <a class="nav-link px-3" href="/member/news">商業新聞</a>
                         </li>
@@ -49,9 +50,9 @@
                                 交易策略
                               </a>
                               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="/member/bbandspage">布林通道</a></li>
-                                <li><a class="dropdown-item" href="/member/rsi">RSI</a></li>
-                                <li><a class="dropdown-item" href="/member/macd">MACD</a></li>
+                                <li><a class="dropdown-item" href="/member/tcone">技術指標一</a></li>
+                                <li><a class="dropdown-item" href="/member/bt">回測指標</a></li>
+              
                               </ul>
                             </li>
                           </ul>
@@ -75,15 +76,131 @@
     <div class="container text-center">
       <div class="row">
         <div class="col-lg-8 m-auto content">
-          <form action="/member/macdplt">
-             <input type="text" name="stockid" placeholder="輸入股票代號">
+          <h1>公司股票代號</h1>
+          <p>臺灣上市公司(代號.tw)臺灣上櫃公司(代號.two)</p>
+          <form action="/member/btpage">
+             <input type="text" name="stockid" placeholder="輸入股票代號" required>
              <button class="btn">查詢</button>
           </form>  
+         
+      
+         
+          <table border="1">
+            <tr>
+              <td>Start</td>
+              <td>起始時間</td>
+            </tr>
+            <tr>
+              <td>End</td>
+              <td>結束時間</td>
+            </tr>
+            <tr>
+              <td>Duration</td>
+              <td>期間</td>
+            </tr>
+            <tr>
+              <td>Exposure Time[%]</td>
+              <td>曝光時間</td>
+            </tr>
+            <tr>
+              <td>Equity Final[$]</td>
+              <td>最終淨值</td>
+              </tr>
+            <tr>
+              <td>Equity Peak[$]</td>
+              <td>淨值峰值</td>
+              </tr>
+            <tr>
+              <td>Return [%]</td>
+              <td>傳回</td>
+              </tr>
+            <tr>
+              <td>Buy & Hold Return [%] </td>
+              <td>買入並持有回報</td>
+             </tr>
+            <tr>
+              <td>Return (Ann.) [%]</td>
+              <td>回傳(年)</td>
+            </tr>
+            <tr>
+              <td>Volatility (Ann.) [%]  </td>
+              <td>波動率(年)</td>
+              </tr>
+            <tr>
+              <td>Sharpe Ratio</td>
+              <td>夏普比率</td>
+              </tr>
+            <tr>
+              <td>Sortino Ratio </td>
+              <td>索蒂諾比率</td>
+              </tr>
+            <tr>
+              <td>Calmar Ratio </td>
+              <td>卡爾馬比率</td>
+              </tr>
+            <tr>
+              <td>Max. Drawdown [%]</td>
+              <td>最大回測[%]</td>
+              </tr>
+            <tr>
+              <td>Avg. Drawdown [%] </td>
+              <td>平均回測[%]</td>
+              </tr>
+            <tr>
+              <td>Max. Drawdown Duration </td>
+              <td>最大回測持續時間[%]</td>
+              </tr>
+            <tr>
+              <td>Avg. Drawdown Duration </td>
+              <td>平均回測持續時間[%]</td>
+              </tr>
+            <tr>
+              <td># Trades 交易</td>
+              </tr>
+            <tr>
+              <td>Win Rate [%]</td>
+              <td>勝率[%]</td>
+              </tr>
+            <tr>
+              <td>Best Trade [%] </td>
+              <td>最佳交易[%]</td>
+              </tr>
+            <tr>
+              <td>Worst Trade [%]  </td>
+              <td>最差交易[%]</td>
+              </tr>
+            <tr>
+              <td>Avg. Trade [%]   </td>
+              <td>平均交易[%]</td>
+              </tr>
+            <tr>
+              <td>Max. Trade Duration  </td>
+              <td>最常交易時間[%]</td>
+              </tr>
+            <tr>
+              <td>Avg. Trade Duration </td>
+              <td>平均交易時間[%]</td>
+              </tr>
+            <tr>
+              <td>Profit Factor </td>
+              <td>利潤因數</td>
+              </tr>
+            <tr>
+              <td>Expectancy [%]  </td>
+              <td>預期[%]</td>
+              </tr>
+            <tr>
+              <td>SQN </td>
+              </tr>     
+          </table>
+          
          </div>
        </div>
     </div>
 
+          <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
    </body>
 </html>

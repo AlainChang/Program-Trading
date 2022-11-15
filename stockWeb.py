@@ -15,7 +15,6 @@ from flask import Flask, redirect, render_template, request, session
 from bson.objectid import ObjectId
 import matplotlib.pyplot as plt
 import mplfinance as mpf
-import talib
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from backtesting.test import SMA
@@ -125,6 +124,30 @@ def signin():
     # 登入成功導向會員頁面
 
 # 路由:signout_page
+
+
+@app.route('/shpw')
+def shpw():
+    return render_template('searchpw.html')
+
+
+@app.route('/searchpw', methods=['POST'])
+def searchpw():
+    global email
+    email = request.form['email']
+    birthday = request.form['birthday']
+
+    # 與資料庫user連線
+    collection = db.user
+
+    # 檢查帳密是否相同
+    result = collection.find({
+        'email': email,
+        'birthday': birthday
+    })
+    for i in result:
+        print(i)
+    return render_template('searchpw.html', data=i)
 
 
 @ app.route('/signout')
@@ -295,7 +318,7 @@ def tcone():
 
     # fig.show()
 
-    plt.subplot(4, 1, 1)
+    plt.subplot(3, 1, 1)
     period = 20
     df['SMA'] = df['Close'].rolling(window=period).mean()
     df['STD'] = df['Close'].rolling(window=period).std()
@@ -331,11 +354,11 @@ def tcone():
     # plt.scatter(value.iloc[sells].index,
     #             value.iloc[sells].Close, marker='v', color='green')
 
-    plt.subplot(4, 1, 3)
+    plt.subplot(3, 1, 2)
     df['rsi'] = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
     plt.plot(df['rsi'])
 
-    plt.subplot(4, 1, 4)
+    plt.subplot(3, 1, 3)
     df['EMA12'] = df.Close.ewm(span=12).mean()
     df['EMA26'] = df.Close.ewm(span=26).mean()
     df['MACD'] = df.EMA12 - df.EMA26

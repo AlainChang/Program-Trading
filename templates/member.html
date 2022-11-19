@@ -9,6 +9,14 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='member.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
+<style>
+  body{
+    background:url(./stock_bg.jpg);
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+  }
+</style>
   <body>
     <section class="canva">
       <nav class="navbar navbar-expand-lg">
@@ -68,28 +76,306 @@
             </div>
           </div>
         </div>
-      </nav>
-        
-      <div class="container text-white">
-        <div class="row">
-          <div class="col-lg-8 m-auto content">
-            <h1>
-              <a class="user">歡迎! {{nickname}}</a>
-            </h1> 
-            <h1 class="">查詢上市、櫃公司資訊</h1>
-             <p>上市(代號.tw)上櫃(代號.two)</p>
-             <form action="/member/stockinfo">
-               <input type="text" name="stockid" placeholder="輸入股票代號" required>
-               <button class="btn1">查詢</button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-      
+      </nav> 
     </section>
-    
+<!-- TradingView Widget BEGIN -->
 
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">行情</span></a>由TradingView提供</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+  {
+  "symbols": [
+    {
+      "description": "",
+      "proName": "NASDAQ:IXIC"
+    },
+    {
+      "description": "",
+      "proName": "NASDAQ:SOX"
+    },
+    {
+      "description": "",
+      "proName": "FOREXCOM:DJI"
+    },
+    {
+      "description": "",
+      "proName": "FRED:SP500"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:USDTWD"
+    }
+  ],
+  "colorTheme": "light",
+  "isTransparent": false,
+  "showSymbolLogo": true,
+  "locale": "zh_TW"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+ 
+
+
+  <div class="content">
+    <h1>
+      <a class="user">歡迎! {{nickname}}</a>
+    </h1> 
+    <h1 class="">查詢上市、櫃公司資訊</h1>
+     <p>上市(代號.tw)上櫃(代號.two)</p>
+     <form action="/member/stockinfo">
+       <input type="text" name="stockid" placeholder="輸入股票代號" required>
+       <button class="btn1">查詢</button>
+    </form>
+
+  </div>
+</div>
+
+<!-- TradingView Widget BEGIN -->
+<div class="calendar">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+  {
+  "colorTheme": "light",
+  "isTransparent": false,
+  "width": "520",
+  "height": "500",
+  "locale": "zh_TW",
+  "importanceFilter": "0,1"
+}
+  </script>
+  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/markets/currencies/economic-calendar/" rel="noopener" target="_blank"><span class="blue-text">財經日曆</span></a>由TradingView提供</div>
+  </div>
+</div>
+<!-- TradingView Widget END -->
+
+<!-- TradingView Widget BEGIN -->
+<div class="stock">
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+   {
+      "title": "股票",
+      "width": 650,
+      "height": 600,
+      "locale": "zh_TW",
+      "showSymbolLogo": true,
+      "symbolsGroups": [
+      {
+         "name": "金融",
+         "symbols": [
+        {
+          "name": "NYSE:JPM",
+          "displayName": "摩根大通"
+        },
+        {
+          "name": "NYSE:WFC",
+          "displayName": "富國銀行"
+        },
+        {
+          "name": "NYSE:BAC",
+          "displayName": "美國銀行"
+        },
+        {
+          "name": "NYSE:HSBC",
+          "displayName": "匯豐控股"
+        },
+        {
+          "name": "NYSE:C",
+          "displayName": "花旗集團"
+        },
+        {
+          "name": "NYSE:MA",
+          "displayName": "萬事達"
+        }
+      ]
+    },
+    {
+      "name": "科技",
+      "symbols": [
+        {
+          "name": "NASDAQ:AAPL",
+          "displayName": "Apple"
+        },
+        {
+          "name": "NASDAQ:GOOGL",
+          "displayName": "谷歌"
+        },
+        {
+          "name": "NASDAQ:MSFT",
+          "displayName": "微軟"
+        },
+        {
+          "name": "NASDAQ:FB",
+          "displayName": "Meta Platforms, Inc"
+        },
+        {
+          "name": "NYSE:ORCL",
+          "displayName": "甲骨文"
+        },
+        {
+          "name": "NASDAQ:INTC",
+          "displayName": "英特爾"
+        }
+      ]
+    },
+    {
+      "name": "服務",
+      "symbols": [
+        {
+          "name": "NASDAQ:AMZN",
+          "displayName": "亞馬遜"
+        },
+        {
+          "name": "NYSE:BABA",
+          "displayName": "阿里巴巴"
+        },
+        {
+          "name": "NYSE:T",
+          "displayName": "At&t Inc"
+        },
+        {
+          "name": "NYSE:WMT",
+          "displayName": "沃爾瑪"
+        },
+        {
+          "name": "NYSE:V",
+          "displayName": "Visa Inc"
+        }
+      ]
+    }
+    ],
+    "colorTheme":"light"
+     }
+    </script>
+    <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/markets/stocks-taiwan/" rel="noopener" target="_blank"><span class="blue-text">股票行情</span></a>由TradingView提供</div>
+   </div>
+  </div>
+   <!-- TradingView Widget END -->
+
+<!-- TradingView Widget BEGIN -->
+<div class="index">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+  {
+  "title": "指數",
+  "width": 650,
+  "height": 600,
+  "locale": "zh_TW",
+  "showSymbolLogo": true,
+  "symbolsGroups": [
+    {
+      "name": "美國和加拿大",
+      "symbols": [
+        {
+          "name": "FOREXCOM:SPXUSD",
+          "displayName": "標準普爾500"
+        },
+        {
+          "name": "FOREXCOM:NSXUSD",
+          "displayName": "US 100"
+        },
+        {
+          "name": "CME_MINI:ES1!",
+          "displayName": "標準普爾500"
+        },
+        {
+          "name": "INDEX:DXY",
+          "displayName": "美元指數"
+        },
+        {
+          "name": "FOREXCOM:DJI",
+          "displayName": "道瓊斯 30"
+        }
+      ]
+    },
+    {
+      "name": "歐洲",
+      "symbols": [
+        {
+          "name": "INDEX:SX5E",
+          "displayName": "歐元藍籌50"
+        },
+        {
+          "name": "FOREXCOM:UKXGBP",
+          "displayName": "UK 100"
+        },
+        {
+          "name": "INDEX:DEU40",
+          "displayName": "德國DAX指數"
+        },
+        {
+          "name": "INDEX:CAC40",
+          "displayName": "法國 CAC 40 指數"
+        },
+        {
+          "name": "INDEX:SMI",
+          "displayName": "SWISS MARKET INDEX SMI® PRICE"
+        }
+      ]
+    },
+    {
+      "name": "亞太",
+      "symbols": [
+        {
+          "name": "INDEX:NKY",
+          "displayName": "日經225"
+        },
+        {
+          "name": "INDEX:HSI",
+          "displayName": "恆生"
+        },
+        {
+          "name": "BSE:SENSEX",
+          "displayName": "印度孟買指數"
+        },
+        {
+          "name": "BSE:BSE500",
+          "displayName": "S&P BSE 500 INDEX"
+        },
+        {
+          "name": "INDEX:KSIC",
+          "displayName": "韓國Kospi綜合指數"
+        }
+      ]
+    }
+  ],
+  "colorTheme": "light"
+}
+  </script>
+  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/markets/indices/" rel="noopener" target="_blank"><span class="blue-text">指數行情</span></a>由TradingView提供</div>
+  </div>
+</div>
+<!-- TradingView Widget END -->
+
+<!-- TradingView Widget BEGIN -->
+<div class="forex">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/markets/currencies/forex-cross-rates/" rel="noopener" target="_blank"><span class="blue-text">匯率</span></a>由TradingView提供</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+  {
+  "width": "1100",
+  "height": "560",
+  "currencies": [
+    "EUR",
+    "USD",
+    "JPY",
+    "GBP",
+    "CHF",
+    "AUD",
+    "CAD",
+    "NZD",
+    "CNY",
+    "TWD"
+  ],
+  "isTransparent": false,
+  "colorTheme": "light",
+  "locale": "zh_TW"
+}
+  </script>
+  </div>
+</div>
+<!-- TradingView Widget END -->
+          
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   </body>

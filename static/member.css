@@ -4,9 +4,9 @@
     box-sizing: border-box;
 }
 .canva{
-    background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)) ,url(./stock_bg.jpg)no-repeat;
+    background-color: black;
     background-size: cover;
-    height: 100vh;
+    height: 80px;
     width: 100%;
 }
 .offcanvas{
@@ -52,12 +52,45 @@
 }
 .content input{
     height: 65px;
-    width: 70%;
+    width: 760px;
     background: white;
     padding: 20px;
     border-radius: 5px;
     outline: none;
     border: none;
+}
+
+.calendar{
+    position: absolute;
+    top:110%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-align: center; 
+}
+.stock{
+    position: absolute;
+    top:180%;
+    left: 30%;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-align: center; 
+}
+.index{
+    position: absolute;
+    top:180%;
+    left: 70%;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-align: center; 
+}
+.forex{
+    position: absolute;
+    top:250%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-align: center; 
 }
 .user{
     color: white;

@@ -9,7 +9,7 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='stockdraw.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>股市觀測站</title>
-
+    
     <script>
         async function callback() {
             let Stock = document.getElementById('stock').value;
@@ -43,6 +43,14 @@
     </script>
 </head>
 
+<style>
+  body{
+  background:url(./Stock_logo_white.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  }
+</style>
+
 <body>
     <section class="canva">
         <nav class="navbar navbar-expand-lg">
@@ -69,7 +77,7 @@
                     <a class="nav-link px-3" href="/member/news">商業新聞</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link px-3" href="/member/stockdraw">股價圖</a>
+                    <a class="nav-link px-3" href="/member/stockdraw">股價分析</a>
                   </li>
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
@@ -78,7 +86,7 @@
                           交易策略
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <li><a class="dropdown-item" href="/member/tcone">技術指標一</a></li>
+                          <li><a class="dropdown-item" href="/member/tcone">技術指標</a></li>
                           <li><a class="dropdown-item" href="/member/bt">回測指標</a></li>
                         </ul>
                       </li>
@@ -102,12 +110,14 @@
           </div>
         </nav>
     </section>
+
     <div class="container">
         <div class="row">
     
         </div>
         <div class="row">
-            <div class="col"><h3>股票代號:</h3></div>
+            <h2 style="font-weight:bold;">YFinance</h2>
+            <div class="col"><h2>股票代號:(適用於台北股市及全球股票商品)</h2></div>
             <div class="row"><b>(上市.tw or 上櫃.two)</b></div>
             <div class="col">
                     <form action="" method="">
@@ -162,11 +172,42 @@
                     box-shadow: 5px 5px 5px #888888;">
                 </div>
             </div>
-            
+          </div>
         </div>
-    </div>
-
     <script>callback();</script>
+
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview">
+    <h2 style="font-weight:bold;">TradingView</h2>
+    <h2>適用於全球股市(不包含台股)</h2>
+    <div id="tradingview_f1beb"></div>
+    <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL圖表</span></a>由TradingView提供</div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+    new TradingView.widget(
+    {
+    "width": 1560,
+    "height": 860,
+    "symbol": "NASDAQ:AAPL",
+    "interval": "D",
+    "timezone": "Etc/UTC",
+    "theme": "light",
+    "style": "1",
+    "locale": "zh_TW",
+    "toolbar_bg": "#f1f3f6",
+    "enable_publishing": false,
+    "hide_side_toolbar": false,
+    "allow_symbol_change": true,
+    "details": true,
+    "calendar": true,
+    "container_id": "tradingview_f1beb"
+  }
+    );
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

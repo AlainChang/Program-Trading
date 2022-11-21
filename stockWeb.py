@@ -41,7 +41,7 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=5)
 
 @app.route('/')
 def index():
-    return render_template('signin.html')
+    return render_template('/signin.html')
 
 # 路由:member_page
 
@@ -282,6 +282,16 @@ def order():
         "email": email
     })
 
+    return render_template('order.html', list=cursor)
+
+
+@app.route('/member/search', methods=["POST"])
+def search():
+    collection = db.record
+
+    cursor = collection.find({
+        "email": email
+    })
     return render_template('order.html', list=cursor)
 
 

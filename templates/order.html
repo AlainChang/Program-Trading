@@ -42,7 +42,7 @@
                           <a class="nav-link px-3" href="/member/news">商業新聞</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link px-3" href="/member/stockdraw">股價圖</a>
+                          <a class="nav-link px-3" href="/member/stockdraw">股價分析</a>
                         </li>
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
@@ -51,7 +51,7 @@
                                 交易策略
                               </a>
                               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="/member/tcone">技術指標一</a></li>
+                                <li><a class="dropdown-item" href="/member/tcone">技術指標</a></li>
                                 <li><a class="dropdown-item" href="/member/bt">回測指標</a></li>
                               </ul>
                             </li>
@@ -77,6 +77,7 @@
     </section>
     <p></p>
     <form action="/member/order" method="post">
+      <div class="order">
       <span>日期</span>
       <input type="date" name="buy_day">
       <select name="buyorsell">
@@ -92,15 +93,19 @@
       <input type="text" name="buy_price" placeholder="價格" required>
       <span>數量(張)</span>
       <input type="text" name="volume" placeholder="張數" required>
-      <p></p>
+    </div>
       <div class="container text-center">
-        <button class="btn" >加入</button>
+        <button class="btn">加入</button>
       </div>
-      <p></p>
-      
-      </div>
-    </form>
+    </div>
+  </form>
     
+  <form action="/member/search" method="post">
+    <div class="container text-center">
+      <button class="btn" >查詢</button>
+    </div>
+  </form>
+
       <div class="container" border>
 
             {%for i in list%}

@@ -3,6 +3,19 @@
     margin: 0;
     box-sizing: border-box;
 }
+.order{
+    font-size: 20px;
+    font-weight: bold;
+}
+.order input{
+    height: 60px;
+    width: 200px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
 .canva{
     background-color: black;
     background-size: cover;
@@ -55,6 +68,7 @@
 
 .btn{
     height: 45px;
+    width: 90px;
     border: none;
     outline: none;
     color: black;
@@ -64,6 +78,7 @@
     position: relative;
     overflow: hidden;
     font-size: 28px;
+    padding: auto;
 }
 .btn::before,
 .btn::after{
@@ -73,6 +88,7 @@
 }
 .btn{
     height: 45px;
+    width: 120px;
     border: none;
     outline: none;
     color: black;
@@ -82,6 +98,7 @@
     position: relative;
     overflow: hidden;
     font-size: 28px;
+    padding: auto;
 }
 .btn::before,
 .btn::after{
@@ -105,7 +122,7 @@
     color: black
 }
 .btn1{
-    height: 45px;
+    height: 65px;
     border: none;
     outline: none;
     color: black;
@@ -122,8 +139,8 @@
     z-index: -1;
 }
 .btn1{
-    height: 35px;
-    width: 100px;
+    height: 65px;
+    width: 120px;
     color: white;
     outline: none;
     border: none;
@@ -133,4 +150,63 @@
 }
 .btn1:hover{
     background-color: rgb(244, 238, 238);
+}
+
+.search{
+    height: 45px;
+    width: 90px;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: blue;
+    font-weight: 500;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    font-size: 28px;
+    border-radius: 10%;
+}
+.search::before,
+.search::after{
+    position: absolute;
+    content: "";
+    z-index: -1;
+}
+.search{
+    height: 65px;
+    width: 100px;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: blue;
+    font-weight: 500;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    font-size: 28px;
+    border-radius: 10%;
+}
+.search::before,
+.search::after{
+    position: absolute;
+    content: "";
+    z-index: -1;
+}
+.search::after{
+    height: 0;
+    top: 0;
+    left: 0;
+    transition-duration: 0.5s;
+    width: 100%;
+}
+.search:hover::after{
+    height: 100%;
+    background: lightgreen;
+}
+.searchicon{
+    font-size: 28px;
+    color: black
+}
+.container{
+    padding: 10px;
 }

@@ -43,7 +43,7 @@
                   <a class="nav-link px-3" href="/member/news">商業新聞</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link px-3" href="/member/stockdraw">股價圖</a>
+                  <a class="nav-link px-3" href="/member/stockdraw">股價分析</a>
                 </li>
                 <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                   <ul class="navbar-nav">
@@ -52,7 +52,7 @@
                         交易策略
                       </a>
                       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="/member/tcone">技術指標一</a></li>
+                        <li><a class="dropdown-item" href="/member/tcone">技術指標</a></li>
                         <li><a class="dropdown-item" href="/member/bt">回測指標</a></li>
 
                       </ul>
@@ -80,12 +80,17 @@
     </section>
 <!-- TradingView Widget BEGIN -->
 
+<!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
   <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">行情</span></a>由TradingView提供</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+  <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/markets/" rel="noopener" target="_blank"><span class="blue-text">市場</span></a>由TradingView提供</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
   {
   "symbols": [
+    {
+      "description": "",
+      "proName": "FOREXCOM:DJI"
+    },
     {
       "description": "",
       "proName": "NASDAQ:IXIC"
@@ -96,26 +101,30 @@
     },
     {
       "description": "",
-      "proName": "FOREXCOM:DJI"
+      "proName": "VANTAGE:SP500"
     },
     {
       "description": "",
-      "proName": "FRED:SP500"
+      "proName": "PEPPERSTONE:VIX"
     },
     {
       "description": "",
       "proName": "FX_IDC:USDTWD"
+    },
+    {
+      "description": "",
+      "proName": "BINANCE:BTCUSDT"
     }
   ],
+  "showSymbolLogo": true,
   "colorTheme": "light",
   "isTransparent": false,
-  "showSymbolLogo": true,
+  "displayMode": "compact",
   "locale": "zh_TW"
 }
   </script>
 </div>
 <!-- TradingView Widget END -->
- 
 
 
   <div class="content">

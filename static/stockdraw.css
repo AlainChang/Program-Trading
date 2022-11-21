@@ -58,7 +58,12 @@
     outline: none;
     border: none;
 }
-
+.tradingview{
+    position: absolute;
+    top:140%;
+    left:5%;
+    right:5%;
+}
 .btn{
     height: 45px;
     border: none;

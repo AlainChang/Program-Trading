@@ -4,7 +4,7 @@ from datetime import timedelta
 import certifi
 import pymongo
 import twstock as t
-import yfinance as yf
+from yfinance import yfinance as yf
 from plotly.subplots import make_subplots
 import plotly.graph_objs as go
 import plotly

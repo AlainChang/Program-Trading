@@ -86,7 +86,7 @@
 }
 .forex{
     position: absolute;
-    top:250%;
+    top:260%;
     left: 50%;
     transform: translate(-50%,-50%);
     color: white;

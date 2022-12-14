@@ -34,14 +34,14 @@ app = Flask(
 
 # seesion
 app.secret_key = "key for secert"
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=5)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=60)
 
 # 路由:首頁
 
 
 @app.route('/')
 def index():
-    return render_template('/signin.html')
+    return render_template('signin.html')
 
 # 路由:member_page
 
@@ -390,45 +390,31 @@ def bt():
 
 @app.route('/member/btpage')
 def btpage():
-    class SmaCrossCons(Strategy):
-        fast_days = 5
-        slow_days = 15
-
+    class SmaCross(Strategy):
         def init(self):
-            super().init()
-            self.fast_line = self.I(SMA, self.data.Close, self.fast_days)
-            self.slow_line = self.I(SMA, self.data.Close, self.slow_days)
-            self.conservative = True
+            price = self.data.Close
+            self.ma1 = self.I(SMA, price, 5)
+            self.ma2 = self.I(SMA, price, 20)
 
         def next(self):
-            if crossover(self.fast_line, self.slow_line):
-                print(
-                    f"{self.data.index[-1]} Buy: Price: {self.data.Close[-1]}, Slow: {self.slow_line[-5:]}, Fast: {self.fast_line[-5:]}"
-                )
+            if crossover(self.ma1, self.ma2):
                 self.buy()
-            elif crossover(self.slow_line, self.fast_line):
-                print(
-                    f"{self.data.index[-1]} Sell: Price: {self.data.Close[-1]}, Slow: {self.slow_line[-5:]}, Fast: {self.fast_line[-5:]}"
-                )
-                self.sell()
-
-        @property
-        def params(self):
-            return self._params
+            elif crossover(self.ma2, self.ma1):
+                if len(self.trades) > 0:
+                    self.trades[0].close()
 
     stockid = request.args.get('stockid')
     id = yf.Ticker(stockid)
     df = id.history(period="max", start="2020-01-01")
     print(df)
 
-    test = Backtest(df, SmaCrossCons, cash=10000000,
-                    commission=0.004, exclusive_orders=True)
+    bt = Backtest(df, SmaCross, commission=.002, cash=10000,
+                  exclusive_orders=True)
+    stats = bt.run()
+    print(stats)
+    bt.plot()
 
-    result = test.optimize(fast_days=[5, 10, 15], slow_days=[10, 15, 20],
-                           constraint=lambda p: p.fast_days < p.slow_days)
-    test.plot()
-
-    return render_template('bt.html')
+    return render_template('bt.html', stats=stats)
 
 
 @app.route('/member/news')
